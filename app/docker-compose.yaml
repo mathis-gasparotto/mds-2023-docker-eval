@@ -1,0 +1,44 @@
+services:
+  app-sqlite:
+    image: eval-sqlite:latest
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 8001:3001
+    working_dir: /app
+    volumes:
+      - eval-sqlite-data:/etc/todos
+  
+  app-mysql:
+    image: eval:latest
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 8002:3001
+    working_dir: /app
+    volumes:
+      - .:/app-mysql
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=secret
+      - MYSQL_DB=eval
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: eval-mysql:latest
+    volumes:
+      - eval-mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=eval
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "--password=secret"]
+      interval: 3s
+      timeout: 900s
+      retries: 300
+
+volumes:
+  eval-mysql-data:
+  eval-sqlite-data:
