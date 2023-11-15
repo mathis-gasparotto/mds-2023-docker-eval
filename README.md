@@ -2,7 +2,7 @@
 
 ## Images
 
-### sqlite.Dockerfile (image name: eval-sqlite)
+### sqlite.Dockerfile
 
 - From alpine
 - Installation de node et yarn pour run l'application
@@ -10,7 +10,7 @@
 - Set le Workdir
 - Copier le contenu de la racine du projet pour le mettre dans l'image
 
-### Dockerfile (image name: eval)
+### app.Dockerfile
 
 - From alpine
 - Installation de node et yarn pour run l'application

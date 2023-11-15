@@ -1,6 +1,8 @@
 services:
   app-sqlite:
-    image: eval-sqlite:latest
+    build: 
+      context: .
+      dockerfile: ./sqlite.Dockerfile
     command: sh -c "yarn install && yarn run dev"
     ports:
       - 8001:3001
@@ -9,7 +11,9 @@ services:
       - eval-sqlite-data:/etc/todos
   
   app-mysql:
-    image: eval:latest
+    build: 
+      context: .
+      dockerfile: ./app.Dockerfile
     command: sh -c "yarn install && yarn run dev"
     ports:
       - 8002:3001
@@ -26,7 +30,9 @@ services:
         condition: service_healthy
 
   mysql:
-    image: eval-mysql:latest
+    build: 
+      context: .
+      dockerfile: ./mysql.Dockerfile
     volumes:
       - eval-mysql-data:/var/lib/mysql
     environment:
