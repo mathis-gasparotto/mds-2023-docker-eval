@@ -82,7 +82,7 @@ fi
 
 # Run mysql app container
 if [ ! $(docker ps -a -q -f name=$app_mysql_container_name) ]; then
-  docker run -dp 8002:3001 --network $mysql_network_name --network-alias app --name $app_mysql_container_name -v .:/$app_mysql_container_name -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=$mysql_root_password -e MYSQL_DB=$mysql_db -w /app $app_mysql_image_name sh -c "yarn install && yarn run dev"
+  docker run -dp 8002:3001 --network $mysql_network_name --network-alias app --name $app_mysql_container_name -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=$mysql_root_password -e MYSQL_DB=$mysql_db -w /app $app_mysql_image_name sh -c "yarn install && yarn run dev"
 elif [ ! $(docker ps -q -f name=$app_mysql_container_name) ]; then
   docker start $app_mysql_container_name
 fi
