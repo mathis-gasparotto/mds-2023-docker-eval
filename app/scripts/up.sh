@@ -59,7 +59,6 @@ fi
 mysql_container_not_already_started=false
 if [ ! $(docker ps -a -q -f name=$mysql_container_name) ]; then
   mysql_container_not_already_started=true
-  # docker run -d --network $mysql_network_name --network-alias mysql --name $mysql_container_name -v $mysql_volume_name:/var/lib/mysql -e MYSQL_HOST=mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_password -e MYSQL_DATABASE=$mysql_db $mysql_image_name --health-cmd="mysqladmin ping -h 127.0.0.1 -u root --password=$mysql_root_password" --health-interval=10s --health-timeout=10s --health-retries=45
   docker run -d --network $mysql_network_name --network-alias mysql --name $mysql_container_name -v $mysql_volume_name:/var/lib/mysql -e MYSQL_HOST=mysql -e MYSQL_ROOT_PASSWORD=$mysql_root_password -e MYSQL_DATABASE=$mysql_db $mysql_image_name
 elif [ ! $(docker ps -q -f name=$mysql_container_name) ]; then
   mysql_container_not_already_started=true
